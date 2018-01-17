@@ -103,7 +103,8 @@ describe('WorkflowSelection', () => {
     >
       <StubPage />
     </WorkflowSelection>,
-    { context }
+    { context },
+    { lifecycleExperimental: true }
   );
   const controller = wrapper.instance();
   const workflowSpy = sinon.spy(controller, 'getWorkflow');
@@ -219,4 +220,30 @@ describe('WorkflowSelection', () => {
       sinon.assert.calledWith(workflowSpy, '1', true);
     });
   });
+<<<<<<< Updated upstream
+=======
+
+  describe('on project props change', () => {
+    const newProject = mockPanoptesResource('projects', {
+      configuration: {
+        default_workflow: '1'
+      },
+      id: 'b',
+      display_name: 'A new project',
+      links: {
+        active_workflows: ['1', '2']
+      }
+    });
+
+    beforeEach(() => {
+      wrapper.setProps({ project: newProject });
+    });
+
+    it('should load the project default workflow', () => {
+      controller.getSelectedWorkflow({ project: newProject });
+      sinon.assert.calledOnce(workflowSpy);
+      sinon.assert.calledWith(workflowSpy, '1', true);
+    });
+  });
+>>>>>>> Stashed changes
 });

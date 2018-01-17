@@ -37,6 +37,7 @@ class WorkflowSelection extends React.Component {
   }
 
   getSelectedWorkflow({ project, preferences, user }) {
+    console.log('>>>> project', project);
     this.setState({ loadingSelectedWorkflow: true });
     // preference workflow query by admin/owner/collab, then workflow query if in project settings, then user selected workflow, then project owner set workflow, then default workflow
     // if none of those are set, select random workflow
