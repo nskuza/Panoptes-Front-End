@@ -64,6 +64,9 @@ DevClassifierPage = createReactClass
     project: mockData.project
     preferences: mockData.preferences
 
+  getInitialState: ->
+    darkTheme: false
+
   componentDidMount: ->
     document.body.style.backgroundColor = '#444'
     document.body.style.color = 'white'
@@ -81,9 +84,21 @@ DevClassifierPage = createReactClass
       completed: false
       annotations: [firstAnnotation]
 
+  toggleDarkTheme: ->
+    this.setState((prevState) => {
+      darkTheme: !prevState.darkTheme
+    })
+
   render: ->
     <div className="content-container">
-      <ClassifierWrapper user={@props.user}  project={@props.project} workflow={@props.classification._workflow} preferences={@props.preferences} classification={@props.classification} onClickNext={@reload} />
+      <div className="classify-page #{if this.state.darkTheme then 'classify-page--dark-theme' else ''}">
+        <ClassifierWrapper user={@props.user}  project={@props.project} workflow={@props.classification._workflow} preferences={@props.preferences} classification={@props.classification} onClickNext={@reload} />
+        <p className="classify-page__theme-button-wrapper">
+        <button className="classify-page__theme-button" type="button" onClick={this.toggleDarkTheme}>
+        Switch to {if this.state.darkTheme then 'light' else 'dark'} theme
+        </button>
+        </p>
+      </div>
       <hr />
       <ClassificationViewer classification={@props.classification} />
     </div>
